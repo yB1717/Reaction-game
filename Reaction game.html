@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <title>
+        Reaction timer
+    </title>
+    <style type="text/css">
+        #square {
+            background-color: red;
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+
+        #div-1 {
+            font-family: sans-serif;
+        }
+
+        .bold {
+            font-weight: 200;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="div-1">
+        <h1>Test your reactions!</h1>
+        <p>Click on the circles and boxes as quickly as u can</p>
+        <b>Your time:<span id="time"></span></b>
+        <p class="bold">Quickest time:<span id="quick"></span></p>
+    </div>
+    <div id="square"></div>
+    <script type="text/javascript">
+        var start = new Date().getTime();
+        var besttime = 1000;
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function getfigure() {
+            var top = Math.random() * 300;
+            var left = Math.random() * 300;
+            var width = Math.random() * 300;
+            if (Math.random() > 0.5) {
+                document.getElementById("square").style.borderRadius = "50%";
+            }
+            else {
+                document.getElementById("square").style.borderRadius = "0";
+            }
+            document.getElementById("square").style.backgroundColor = getRandomColor();
+            document.getElementById("square").style.top = top + "px";
+            document.getElementById("square").style.left = left + "px";
+            document.getElementById("square").style.height = width + "px";
+            document.getElementById("square").style.width = width + "px";
+
+            document.getElementById("square").style.display = "block";
+            start = new Date().getTime();
+        }
+        function appearafterdelay() {
+            setTimeout(getfigure, Math.random() * 2000);
+        }
+
+        document.getElementById("square").onclick = function () {
+            document.getElementById("square").style.display = "none";
+            var end = new Date().getTime();
+
+            var timetaken = (end - start) / 1000;
+            if (besttime > timetaken) {
+                besttime = timetaken;
+            }
+            document.getElementById("time").innerHTML = timetaken + "secs";
+            document.getElementById("quick").innerHTML = besttime + "secs";
+            appearafterdelay();
+        }
+    </script>
+
+</body>
+
+</html>
